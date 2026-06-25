@@ -19,7 +19,7 @@ It also includes built-in OpenCV visualization windows for live visual debugging
 
 ## How to Run
 
-1. **Launch your camera stream or rosbag** that publishes the raw images (default topic: `/camera/image_raw`). 
+1. **Launch your camera stream or rosbag** that publishes the raw images (default topic: `/camera/image`). 
 
 2. **Run the LED Tracker node:**
    ```bash
