@@ -32,11 +32,11 @@ private:
         cv::cvtColor(frame, hsv, cv::COLOR_BGR2HSV);
         
         // Adjust these values based on your exact underwater LED brightness and colour
-        cv::Scalar lower_green(40, 100, 100); 
-        cv::Scalar upper_green(80, 255, 255);
+        cv::Scalar lower_green(0, 0, 200); 
+        cv::Scalar upper_green(180, 25, 255);
         cv::inRange(hsv, lower_green, upper_green, mask);
 
-        // Find Contours and extract Centroids
+
         std::vector<std::vector<cv::Point>> contours;
         cv::findContours(mask, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
 
@@ -53,7 +53,7 @@ private:
             }
         }
 
-        if (centers.size() == 4) {
+        if (centers.size() == 5) {
             // First sort by Y-coordinate to separate Top 2 from Bottom 2
             std::sort(centers.begin(), centers.end(), [](const cv::Point2f& a, const cv::Point2f& b) {
                 return a.y < b.y;
@@ -80,7 +80,7 @@ private:
             
         } else {
             RCLCPP_WARN_THROTTLE(this->get_logger(), *this->get_clock(), 1000, 
-                                 "Tracking unstable! Detected %ld LEDs instead of 4", centers.size());
+                                 "Tracking unstable! Detected %ld LEDs instead of 5", centers.size());
         }
 
         cv::imshow("Camera Feed & Tracking", frame);
